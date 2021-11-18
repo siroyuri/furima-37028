@@ -144,6 +144,8 @@ GEM
       ffi (~> 1.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
+    robocop (0.1.1)
+      rack
     ruby_dep (1.5.0)
     rubyzip (2.3.2)
     sass (3.7.4)
@@ -212,6 +214,7 @@ DEPENDENCIES
   mysql2 (>= 0.4.4)
   puma (~> 3.11)
   rails (~> 6.0.0)
+  robocop
   sass-rails (~> 5)
   selenium-webdriver
   spring
