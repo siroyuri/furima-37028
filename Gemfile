@@ -54,5 +54,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development do
-  gem 'robocop', require: false
+  gem 'rubocop', require: false
 end
+
+gem 'devise'
