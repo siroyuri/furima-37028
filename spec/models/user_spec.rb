@@ -11,8 +11,8 @@ RSpec.describe User, type: :model do
         expect(@user).to be_valid
       end
       it 'passwordは6文字以上であれば登録できる' do
-        @user.password = 1234567
-        @user.password_confirmation = 1234567
+        @user.password = '123abcd'
+        @user.password_confirmation = '123abcd'
         expect(@user).to be_valid
       end
     end
@@ -45,14 +45,32 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password can't be blank")
       end
       it 'passwordは5文字以下だと登録できない' do
-        @user.password = 12345
-        @user.password_confirmation = 12345
+        @user.password = '123ab'
+        @user.password_confirmation = '123ab'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
       end
-      it 'passwordとpassword_confirmationが不一致だと登録できない' do
+      it 'passwordは英字のみでは登録できない' do
+        @user.password = 'abcdef'
+        @user.password_confirmation = 'abcdef'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Input half width alphanumeric mixture characters.")
+      end
+      it 'passwordは数字のみでは登録できない' do
         @user.password = 123456
-        @user.password_confirmation = 1234567
+        @user.password_confirmation = 123456
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Input half width alphanumeric mixture characters.")
+      end
+      it 'passwordは全角文字を含んでいると登録できない' do
+        @user.password = '123ａｂｃ'
+        @user.password_confirmation = '123ａｂｃ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Input half width alphanumeric mixture characters.")
+      end
+      it 'passwordとpassword_confirmationが不一致だと登録できない' do
+        @user.password = '123abc'
+        @user.password_confirmation = '456def'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
