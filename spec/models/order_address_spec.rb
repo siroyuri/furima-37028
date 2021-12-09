@@ -6,7 +6,7 @@ RSpec.describe OrderAddress, type: :model do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
       @order_address = FactoryBot.build(:order_address, user_id: user.id, item_id: item.id)
-      sleep 0.1
+      sleep 0.1 # 処理のタイムアウトを防ぐ記述
     end
 
     context '保存できる場合' do
@@ -36,7 +36,7 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Postcode is enter half-width characters as in the example(123-4567)")
       end
       it 'prefecture_idが空だと保存できない' do
-        @order_address.prefecture_id = ''
+        @order_address.prefecture_id = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Prefecture can't be blank")
       end
