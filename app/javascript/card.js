@@ -17,7 +17,6 @@ const order = () => {
     Payjp.createToken(card, (status, response) => {
       if (status == 200) {
         const token = response.id;
-        console.log(token);
         const renderTokenForm = document.getElementById("charge-form");
         const tokenObj = `<input value=${token} name='token', type='hidden'>`;
         renderTokenForm.insertAdjacentHTML("beforeend", tokenObj);
