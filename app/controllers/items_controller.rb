@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :user_confirmation, only: [:edit, :update, :destroy]
+  before_action :send_to_root, only: [:edit, :update, :destroy]
+
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -51,8 +52,8 @@ class ItemsController < ApplicationController
     ).merge(user_id: current_user.id)
   end
 
-  def user_confirmation
-    unless current_user.id == @item.user_id
+  def send_to_root
+    if @item.order != nil || current_user.id != @item.user_id
       redirect_to root_path
     end
   end
